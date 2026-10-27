@@ -24,9 +24,13 @@ const QUESTION = {
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function extractSkills(text) {
   return KNOWN_SKILLS.filter((skill) =>
-    new RegExp(`\\b${skill}\\b`, "i").test(text)
+    new RegExp(`(^|[^A-Za-z0-9])${escapeRegex(skill)}($|[^A-Za-z0-9])`, "i").test(text)
   );
 }
 
